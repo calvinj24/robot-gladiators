@@ -3,7 +3,7 @@ var playerHealth = 100;
 var playerAttack = 10;
 var playerMoney = 10;
 
-console.log(playerName, playerAttack, playerHealth)
+console.log(playerName, playerAttack, playerHealth);
 
 var enemyNames = ["Roborto", "Amy Android", "Robo Trumble"];
 var enemyHealth = 50;
@@ -78,8 +78,15 @@ var startGame = function (){
             window.alert("Welcome to Robot Gladiators!  Round " + (i + 1));
             var pickedEnemyName = enemyNames[i];
             enemyHealth = 50;
-            //debugger;
             fight(pickedEnemyName);
+
+            // if not last enemy in array
+            if (playerHealth > 0 && i < enemyNames.length - 1) {
+                var storeConfirm = window.confirm("The fight is over. Visit the store?");
+                if (storeConfirm){
+                    shop();
+                }
+            }
         }
         else {
             window.alert("You have lost your robot in battle! Game Over!");
@@ -88,7 +95,7 @@ var startGame = function (){
     }
     // after the loop ends, player is either out of health or enemies to fight, so run the endGame function
     endGame();
-}
+};
 
 // function to end the entire game
 var endGame = function() {
@@ -108,6 +115,34 @@ var endGame = function() {
     } 
     else {
         window.alert("Thank you for playing Robot Gladiators! Come back soon!");
+    }
+};
+
+var shop = function() {
+    var shopOptionPrompt = window.prompt(
+        "Would you like to REFILL your health, UPGRADE your attack, or LEAVE the store? Please enter one: 'REFILL', 'UPGRADE', or 'LEAVE' to make a choice."
+    );
+    switch(shopOptionPrompt) {
+        case "REFILL":
+        case "refill":
+            window.alert("Refilling player's health by 20 for 7 dollars.");
+            playerHealth = playerHealth + 20;
+            playerMoney = playerMoney - 7;
+            break;
+        case "UPGRADE":
+        case "upgrade":
+            window.alert("Upgrading player's attack by 6 for 7 dollars");
+            playerAttack = playerAttack + 6;
+            playerMoney = playerMoney - 7;
+            break;
+        case "LEAVE":
+        case "leave":
+            window.alert("Leaving the store.");
+            break;
+        default:
+            window.alert("You did not pick a valid option. Try again.")
+            shop();
+            break;
     }
 };
 
